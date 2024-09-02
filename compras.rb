@@ -26,7 +26,6 @@ class Compras
   end
 
   def comprar
-    carrinho
     
     loop do
       puts "Digite o número do item | 0 para sair"
@@ -73,3 +72,5 @@ meu_carrinho.carrinho
 meu_carrinho.comprar
 meu_carrinho.ver_carrinho
 meu_carrinho.calcula_valor
+
+
