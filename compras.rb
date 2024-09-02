@@ -26,7 +26,7 @@ class Compras
   end
 
   def comprar
-    
+    carrinho
     loop do
       puts "Digite o número do item | 0 para sair"
       item_compra = gets.chomp.to_i
@@ -54,13 +54,13 @@ class Compras
   def ver_carrinho
     puts "Carrinho"
     @itens_carrinho.each_with_index do |item, indice|
-      puts "#{indice + 1} item | #{item[:nome]} | R$ #{item[:preco]} | Quantidade: #{item[:quantidade]}"
+      puts "#{indice + 1} item | Produto: #{item[:nome]} |Preço: R$ #{item[:preco]} | Quantidade: #{item[:quantidade]}"
     end
   end
 
   def calcula_valor
     total = @itens_carrinho.sum { |item| item[:preco] * item[:quantidade] }
-    puts "Valor total do carrinho: R$ #{total}"
+    puts "Valor total do carrinho: R$ #{'%.2f' % total}"
     puts "Desconto: 1 - Sim | Enter - não"
     desconto = gets.chomp
     if desconto == '1'
@@ -71,18 +71,51 @@ class Compras
 
       print "Valor com desconto: #{'%.2f' % total}"
       puts ""
+    else
+      puts "Valor total do carrinho: R$ #{'%.2f' % total}"
+    end
+  end
+
+  def menu
+    loop do
+      puts "\nMenu de compras"
+      puts "1 - Ver estoque"
+      puts "2 - Comprar itens"
+      puts "3 - Ver carrinho"
+      puts "4 - Calcular valor total"
+      puts "0 - Sair"
+      print "Opção: "
+
+      opcao = gets.chomp.to_i
+
+      if opcao == 1
+        carrinho
+      elsif opcao == 2
+        comprar
+      elsif opcao == 3
+        ver_carrinho
+      elsif opcao == 4
+        calcula_valor
+      elsif opcao == 0
+        puts "saindo do sistema..."
+        return
+      else
+        puts "Opção inválida! Tente novamente"
+      end
     end
   end
 end
 
 
+
+
 meu_carrinho = Compras.new
 
+
 meu_carrinho.estoque
-meu_carrinho.carrinho
-meu_carrinho.comprar
-meu_carrinho.ver_carrinho
-meu_carrinho.calcula_valor
+meu_carrinho.menu
 
 
-
+#Fazer ainda um menu e criar uma função de desconto
+#Fazer um arquivo login.txt com o usuário e senha
+#e o arquivo login.rb
