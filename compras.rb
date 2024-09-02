@@ -61,6 +61,17 @@ class Compras
   def calcula_valor
     total = @itens_carrinho.sum { |item| item[:preco] * item[:quantidade] }
     puts "Valor total do carrinho: R$ #{total}"
+    puts "Desconto: 1 - Sim | Enter - não"
+    desconto = gets.chomp
+    if desconto == '1'
+      puts "Desconto - %"
+      porcentagem_desconto = gets.chomp.to_f
+
+      total = total - (total * porcentagem_desconto / 100)
+
+      print "Valor com desconto: #{'%.2f' % total}"
+      puts ""
+    end
   end
 end
 
@@ -72,5 +83,6 @@ meu_carrinho.carrinho
 meu_carrinho.comprar
 meu_carrinho.ver_carrinho
 meu_carrinho.calcula_valor
+
 
 
