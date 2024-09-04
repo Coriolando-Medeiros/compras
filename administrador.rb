@@ -65,7 +65,27 @@ class Administrador
   end
 
   def adicionar_usuario
-    puts "Em implementação"
+    puts "Usuários cadastrados"
+    if File.exist?("login.txt") && !File.zero?("login.txt")
+      File.open("login.txt", "r") do |arquivo|
+        arquivo.each_line do |linha|
+          nome_usuario = linha.split(":").first.strip
+          puts nome_usuario
+        end
+      end
+    end
+  
+    puts "Adicionar novo usuário"
+    print "Nome: "
+    usuario = gets.chomp
+    print "Senha: "
+    senha = gets.chomp
+  
+    File.open("login.txt", "a") do |arquivo|
+      arquivo.puts "#{usuario}:#{senha}"
+    end
+  
+    puts "Usuário #{usuario} adicionado!"
   end
 
   def remover_usuario
