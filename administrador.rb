@@ -3,11 +3,11 @@ require_relative 'compras'
 class Administrador
   def initialize
     @compras = Compras.new
-    @compras.estoque # Inicializa o estoque na mesma instância
+    @itens_estoque = @compras.estoque
   end
   
   def ver_estoque
-    @compras.carrinho # Usa a instância existente de Compras
+    @compras.carrinho
   end
 
   def atualizar_estoque
@@ -39,7 +39,29 @@ class Administrador
   end
 
   def remover_item
-    puts "Em implementação"
+    if @itens_estoque.empty?
+      puts "Estoque vazio!"
+      puts "Adicionar novo item?"
+      puts "1 - Sim | Enter - Sair"
+      opcao = gets.chomp
+      if opcao == '1'
+        adicionar #ainda precisa implementar
+      else
+        puts "Saindo..."
+        return
+      end
+    else
+      ver_estoque
+      puts "Qual item deseja excluir?"
+      puts "Digite o número"
+      escolha = gets.chomp.to_i
+      if escolha >= 0 && escolha < @itens_estoque.size
+        @itens_estoque.delete_at(escolha)
+        puts "Item excluido!"
+      else
+        puts "Escolha inválida!"
+      end
+    end
   end
 
   def adicionar_usuario
