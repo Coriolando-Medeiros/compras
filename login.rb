@@ -1,6 +1,3 @@
-#load 'compras.rb'
-
-
 def login
     puts "Sistema de compras"
     puts ""

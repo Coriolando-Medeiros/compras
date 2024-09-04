@@ -45,7 +45,7 @@ class Administrador
       puts "1 - Sim | Enter - Sair"
       opcao = gets.chomp
       if opcao == '1'
-        adicionar #ainda precisa implementar
+        adicionar
       else
         puts "Saindo..."
         return
@@ -82,33 +82,50 @@ class Administrador
     senha = gets.chomp
   
     File.open("login.txt", "a") do |arquivo|
-      arquivo.puts "#{usuario}:#{senha}"
+    if File.size("login.txt") > 0 && File.read("login.txt")[-1] != "\n"
+      arquivo.puts
     end
-  
-    puts "Usuário #{usuario} adicionado!"
+    arquivo.puts "#{usuario}:#{senha}"
+  end
+
+  puts "Usuário #{usuario} adicionado!"
   end
 
   def remover_usuario
-    if File.exist?("login.txt") && !File.zero?("login.txt")
-      File.open("login.txt", "r") do |arquivo|
-        arquivo.each_line do |linha|
-          nome_usuario = linha.split(":").first.strip
-          puts nome_usuario
-        end
+    if File.empty?("login.txt") && !File.zerp?("login.txt")
+      puts "Sem usuários cadastrados!"
+      puts "Adicionar novo usuário?"
+      puts "1 - Sim | Enter - Sair"
+      opcao = gets.chomp
+      if opcao == '1'
+        adicionar_usuario
+      else
+        puts "Saindo..."
+        return
       end
-
-      puts ""
-      puts "Digite o nome do usuário a ser deletado"
-      nome_excluir = gets.chomp
-
-      linhas = File.readlines("login.txt")
-      linhas.delete_if { |linha| linha.split(":").first.strip == nome_excluir }
-
-      File.open("login.txt", "w") do |arquivo|
-        linhas.each { |linha| arquivo.puts(linha) }
+    else
+      if File.exist?("login.txt") && !File.zero?("login.txt")
+        File.open("login.txt", "r") do |arquivo|
+          arquivo.each_line do |linha|
+            nome_usuario = linha.split(":").first.strip
+            puts nome_usuario
+          end
         end
-      puts "Usuário #{nome_excluir.capitalize} foi removido"
-      
+
+        puts ""
+        puts "Digite o nome do usuário a ser deletado"
+        puts "Enter para sair"
+        nome_excluir = gets.chomp
+
+        linhas = File.readlines("login.txt")
+        linhas.delete_if { |linha| linha.split(":").first.strip == nome_excluir }
+
+        File.open("login.txt", "w") do |arquivo|
+          linhas.each { |linha| arquivo.puts(linha) }
+          end
+        puts "Usuário #{nome_excluir.capitalize} foi removido"
+        
+      end
     end
   end
 
