@@ -1,6 +1,6 @@
 class Compras
   attr_accessor :itens_estoque
-  
+
   def initialize
     @itens_estoque = []
     @itens_carrinho = []
@@ -21,6 +21,7 @@ class Compras
 
   def carrinho
     puts "Estoque"
+    estoque
     @itens_estoque.each_with_index do |item, indice|
       puts "#{indice + 1} item | #{item[:nome]} | R$ #{item[:preco]} | Estoque: #{item[:quantidade]}"
     end
@@ -99,17 +100,21 @@ class Compras
       elsif opcao == 4
         calcula_valor
       elsif opcao == 0
-        puts "Esvaziar carrinho? 1 - Sim | Enter - Não"
-        esvaziar = gets.chomp
-        if esvaziar == '1'
-          @itens_carrinho = []
-          puts "Carrinho vazio? #{@itens_carrinho}"
-          puts "saindo do sistema..."
-          return
+        if !@itens_carrinho.empty?
+          puts "Esvaziar carrinho? 1 - Sim | Enter - Não"
+          esvaziar = gets.chomp
+          if esvaziar == '1'
+            @itens_carrinho = []
+          
+            puts "Carrinho vazio? #{@itens_carrinho}"
+            puts "saindo do sistema..."
+            return
+          end
+
         else
           puts "saindo do sistema..."
           return
-          end
+        end
       else
         puts "Opção inválida! Tente novamente"
       end
