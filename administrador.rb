@@ -69,7 +69,27 @@ class Administrador
   end
 
   def remover_usuario
-    puts "Em implementação"
+    if File.exist?("login.txt") && !File.zero?("login.txt")
+      File.open("login.txt", "r") do |arquivo|
+        arquivo.each_line do |linha|
+          nome_usuario = linha.split(":").first.strip
+          puts nome_usuario
+        end
+      end
+
+      puts ""
+      puts "Digite o nome do usuário a ser deletado"
+      nome_excluir = gets.chomp
+
+      linhas = File.readlines("login.txt")
+      linhas.delete_if { |linha| linha.split(":").first.strip == nome_excluir }
+
+      File.open("login.txt", "w") do |arquivo|
+        linhas.each { |linha| arquivo.puts(linha) }
+        end
+      puts "Usuário #{nome_excluir.capitalize} foi removido"
+      
+    end
   end
 
   def menu_administrador
