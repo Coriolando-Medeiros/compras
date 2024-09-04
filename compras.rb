@@ -1,4 +1,6 @@
 class Compras
+  attr_accessor :itens_estoque
+  
   def initialize
     @itens_estoque = []
     @itens_carrinho = []
@@ -97,8 +99,17 @@ class Compras
       elsif opcao == 4
         calcula_valor
       elsif opcao == 0
-        puts "saindo do sistema..."
-        return
+        puts "Esvaziar carrinho? 1 - Sim | Enter - Não"
+        esvaziar = gets.chomp
+        if esvaziar == '1'
+          @itens_carrinho = []
+          puts "Carrinho vazio? #{@itens_carrinho}"
+          puts "saindo do sistema..."
+          return
+        else
+          puts "saindo do sistema..."
+          return
+          end
       else
         puts "Opção inválida! Tente novamente"
       end
@@ -107,15 +118,8 @@ class Compras
 end
 
 
-
-
-meu_carrinho = Compras.new
-
-
-meu_carrinho.estoque
-meu_carrinho.menu
-
-
-#Fazer ainda um menu e criar uma função de desconto
-#Fazer um arquivo login.txt com o usuário e senha
-#e o arquivo login.rb
+if __FILE__ == $0
+  meu_carrinho = Compras.new
+  meu_carrinho.estoque
+  meu_carrinho.menu
+end

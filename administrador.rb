@@ -1,12 +1,41 @@
+require_relative 'compras'
+
 class Administrador
+  def initialize
+    @compras = Compras.new
+    @compras.estoque # Inicializa o estoque na mesma instância
+  end
   
   def ver_estoque
-    puts "Em implementação"
-    require_relative 'estoque'
+    @compras.carrinho # Usa a instância existente de Compras
   end
 
   def atualizar_estoque
-    puts "Em implementação"
+    ver_estoque
+    puts "Digite o número do item que deseja atualizar"
+    puts "Enter para sair"
+    numero_item = gets.chomp
+    
+    return if numero_item.empty?
+    
+    numero_item = numero_item.to_i
+  
+    if numero_item > 0 && numero_item <= @compras.itens_estoque.length
+      item_selecionado = @compras.itens_estoque[numero_item - 1]
+  
+      puts "Digite o novo preço para o item '#{item_selecionado[:nome]}'"
+      novo_preco = gets.chomp.to_f
+      item_selecionado[:preco] = novo_preco
+  
+      puts "Digite a nova quantidade para o item '#{item_selecionado[:nome]}'"
+      nova_quantidade = gets.chomp.to_i
+      item_selecionado[:quantidade] = nova_quantidade
+  
+      puts "\nItem atualizado:"
+      puts "Nome: #{item_selecionado[:nome]} | Novo preço: R$ #{item_selecionado[:preco]} | Quantidade: #{item_selecionado[:quantidade]}"
+    else
+      puts "Número do item inválido!"
+    end
   end
 
   def remover_item
